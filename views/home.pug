@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    -data = data || {}
+    -registered = registered || false 
+    if registered
+        div i registered 
+        form(method="post" enctype="multipart/form-data" action="/upload")
+            input( type="file" webkitdirectory mozdirectory)
+            
+    else
+        a(
+            class='JoinNow'
+            href = '/join'
+        )   Join now 
+        br
+        a(
+        class='signIn'
+        href = '/signIn'
+        ) Sign in 
+        br 

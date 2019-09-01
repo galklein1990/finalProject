@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  -data = data || {}
+  -var newLines = 3
+  -var email = email || false
+
+  if errors
+    ul
+      for error in errors
+        li= error.msg
+  div(class="formWrapper")
+    form(action="../" method="POST" )
+        label(for="firstName" class="inputDescription") First Name:
+        br
+        input(
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="form-control" 
+        )
+        -for (var i = 0; i < newLines ; i++)
+            br
+        label(for="lastName" class="inputDescription") Last Name:
+        br
+        input(
+            type="text"
+            id="lastName"
+            name="lastName"
+            class="form-control"
+        )
+        -for (var i = 0; i < newLines; i++)
+            br
+        label(for="email" class="inputDescription") Email:
+        br
+        input(
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+        )
+        -for (var i = 0; i < newLines ; i++)
+            br
+        label(for="pass" class="inputDescription") Password:
+        br
+        input(
+            type="password"
+            id="pass"
+            name="password"
+            class="form-control"
+        )
+        -for (var i = 0; i < newLines ; i++)
+            br
+        input(
+            type="submit"
+            value="Agree & Join"
+            class="btn btn-lg btn-primary btn-block inputDescription agree"
+        )

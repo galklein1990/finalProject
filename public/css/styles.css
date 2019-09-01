@@ -1,6 +1,9 @@
+html, body {
+    height: 100%;
+  }
 body {
     padding: 40px 10px;
-    background-color: #eee;
+    background-color: #0077b5;
   }
   .listing-reg h1 {
     text-align: center;
@@ -58,3 +61,14 @@ body {
   .listing-table th:first-child {
     border-right: 1px solid #666;
   }
+ 
+  .form-control, .inputDescription{position: relative; left:20%; }
+  .agree{background-color: cornflowerblue}
+  .formWrapper{width: 20%;
+    background-color: antiquewhite;
+    padding: 2%;
+    position: relative; left:38%; 
+}
+
+
+  
