@@ -3,13 +3,15 @@ extends layout
 block content
   -data = data || {}
   -var newLines = 3
-  -var email = email || false
-
+  -var myEmail = email 
+  -var fail = registerFailed
   if errors
     ul
       for error in errors
         li= error.msg
   div(class="formWrapper")
+    if fail
+        div we failed
     form(action="../" method="POST" )
         label(for="firstName" class="inputDescription") First Name:
         br
@@ -38,6 +40,7 @@ block content
             id="email"
             name="email"
             class="form-control"
+            value=myEmail
         )
         -for (var i = 0; i < newLines ; i++)
             br

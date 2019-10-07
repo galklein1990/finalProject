@@ -4,8 +4,13 @@ block content
     -data = data || {}
     -registered = registered || false 
     if registered
-        div i registered 
-        form(method="post" enctype="multipart/form-data" action="/upload")
+        div Upload Images
+        br
+        <form action="." method="post">Select images:
+            <input type="file" name="img" multiple>
+             <input type="submit">    
+
+        //form(method="post" enctype="multipart/form-data" action="/upload")
             input( type="file" webkitdirectory mozdirectory)
             
     else

@@ -69,6 +69,11 @@ body {
     padding: 2%;
     position: relative; left:38%; 
 }
+.logginFail{
+  position: relative;
+  left:32%;
+  padding-bottom:3%;
+}
 
 
   

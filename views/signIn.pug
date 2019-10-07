@@ -4,11 +4,14 @@ block content
   -data = data || {}
   -var newLines = 3
   -var email = email || false
+  -var fail = registerFailed
 
   if errors
     ul
       for error in errors
         li= error.msg
+  if fail
+    div(class="logginFail") Email and\or password do not match
   div(class="formWrapper")
     form(action="../" method="POST" )
         label(for="email" class="inputDescription") Email:
