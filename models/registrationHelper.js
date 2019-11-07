@@ -2,6 +2,7 @@ const Registration = require('./Registration');
 const { body, validationResult } = require('express-validator');
 const TAG = "registrationHelper->";
 
+
 function register(req,res){
     const registration = new Registration(req.body);
         registration.save()

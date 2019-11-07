@@ -5,14 +5,29 @@ const path = require('path');
 const auth = require('http-auth');
 const Registration = require('../models/Registration');
 const registrationHelper = require('../models/registrationHelper');
-const router = express.Router();
+const email = require("../models/email");
+const metorologyHelper = require('../models/meteorologyHelper');
+var url = require('url');
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+var app = express();
+const router = express.Router();
+const request = require('request');  
+const querystring = require('querystring');
+
+const imagesInputDir = "C:/Users/mdwq87/Desktop/img";
+const imagesOutputDir = "C:/Users/mdwq87/Desktop/gal/project/uploads";
 var registered = false;
 let registrationFailed = true;
 const TAG = "index->";
-const email = "email";
+//const email = "email";
 const password = "password";
+var jsdom = require("jsdom");
+var JSDOM = jsdom.JSDOM;
 
+const options = metorologyHelper.getRequestOptions('1','402','C');
+//metorologyHelper.createMeteorology();
 var registrationValidation = function RegistrationValidation(fields){
  // console.log("we got to registrationValidation");
   if(fields.firstName != undefined && fields.lastName != undefined ){ 
@@ -25,6 +40,8 @@ var registrationValidation = function RegistrationValidation(fields){
   return false;
 }
 
+var fs = require('fs');
+
 const basic = auth.basic({
   file: path.join(__dirname, '../users.htpasswd'),
 });
@@ -34,11 +51,23 @@ const basic = auth.basic({
 
 
 router.get('/', (req, res) => {
-  //res.send('It works galosh!');
+
   res.render('home');
+ 
+  
+ 
+ 
 
 });
- 
+function reverse(s){
+  return s.split("").reverse().join("");
+}
+
+function createDivContainer(htmlString){
+  var d = document.createElement(htmlString);
+  d.innerHTML = some_html;
+  return d.firstChild;
+}
 
 router.get('/gal', (req, res) => {
     //res.send('It works galosh!');
@@ -52,15 +81,51 @@ router.get('/gal', (req, res) => {
     //res.render('form', { title: 'Registration form' });
   });
 */
+
+
+//const path1 = require('path');
+
+function writeImage(ImagePath,imgName,res){
+   
+  console.log(TAG,"imgName = ",imgName);
+  let readImagefrom =  ImagePath + "/" + imgName//path.join( ImagePath , imgName);
+  
+  console.log("readImageFrom = ",readImagefrom)
+  fs.readFile( readImagefrom, function (err, data) {
+    console.log("readFile->","err = ", err);
+    console.log(TAG,"writeImage -> DATA = ")
+    console.log(data);
+    var imageName = imgName;
+    console.log("image name = " + imgName);
+    // If there's an error
+    if(!imageName){
+      console.log("There was an error")
+      res.redirect("/");
+      res.end();
+    } else {
+      let temp = path.join(__dirname, 'uploads');
+      var newPath =  path.join(imagesOutputDir, imageName);  //__dirname  +'/uploads/' +  + imageName;
+      console.log("newPath = ",newPath);
+      // write file to uploads/fullsize folder
+      fs.writeFile(newPath, data, function (err) {
+        // let's see it
+        console.log("writeFile->","err = ", err);
+        console.log(TAG,"we are in writefILE CALLBACK");
+        res.redirect("/uploads/fullsize/" + imageName);
+      });
+    }
+  });
+}
+
+app.post('/', upload.array('photos', 12), function (req, res, next) {
+  console.log(TAG,"app.post was invoked")
+ 
+  // req.files is array of `photos` files
+  // req.body will contain the text fields, if there were any
+})
 router.post('/',
-[
- /* body('firstName')
-    .isLength({ min: 1 })
-    .withMessage('Please enter first name'),
-  body('lastName')
-    .isLength({ min: 1 })
-    .withMessage('Please enter an last name'),
-  */
+
+/**/[
 
   body('email')
     .isLength({ min: 1 })
@@ -68,14 +133,31 @@ router.post('/',
   body('password')
     .isLength({ min: 4 })
     .withMessage('Please enter a proper password'),
-],
-(req, res) => {
+],    ////upload.array('photos', 2),
+(req, res,next) => {
+  console.log(TAG, "req.body = ", req.body)
   console.log(TAG,"we are in post request in 'home' page");
+ // console.log("req.headers = ",req.headers);
+  console.log("req.headers.host = ",req.headers.host);
+  //var pathname = url.parse(req.headers.host).pathname;
+  //console.log("pathname = " , pathname)
+  //console.log(req)
+  let images = req.body.img;
   console.log(req.body.img);
-  let images = req.body.images;
-  if(images!= undefined){
-    console.log("images = " + images);
+
+  console.log("req.files = ")
+  //console.log(req.files.length);
+  if(req.body.img!= undefined){
+    //writeImage(req.headers.host,req.body.img[0],res)
+    console.log("images = ");
+    email.sendEmail();
   }
+
+
+ 
+
+
+ 
   let  errors = validationResult(req);
   if (errors.isEmpty()) 
   {  
@@ -116,8 +198,6 @@ else{
 });
 
 router.get('/signIn', (req, res) => {
-  //res.send('It works galosh!');
-//  res.render('form');
   res.render('signIn', { title: 'sign in' });
 });
 

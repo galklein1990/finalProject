@@ -7,11 +7,13 @@ block content
         div Upload Images
         br
         <form action="." method="post">Select images:
-            <input type="file" name="img" multiple>
-             <input type="submit">    
-
-        //form(method="post" enctype="multipart/form-data" action="/upload")
-            input( type="file" webkitdirectory mozdirectory)
+            <input type="file" name="img" multiple>       
+            - var lst =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
+            <select >
+                each city in lst
+                    option(value= city) #{city}           
+            <input type="submit">
+    
             
     else
         a(

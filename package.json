@@ -12,12 +12,19 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "connect-busboy": "0.0.2",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.6",
     "express-validator": "^6.1.1",
     "http-auth": "^3.2.3",
+    "jsdom": "^15.2.0",
+    "line-by-line": "^0.1.6",
     "mongoose": "^5.6.11",
-    "pug": "^2.0.4"
+    "multer": "^1.4.2",
+    "nodemailer": "^6.3.1",
+    "pug": "^2.0.4",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
