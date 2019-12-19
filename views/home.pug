@@ -6,7 +6,7 @@ block content
     if registered
         div Upload Images
         br
-        <form action="." method="post">Select images:
+        <form action="/myImages" method="post" enctype="multipart/form-data">Select images:
             <input type="file" name="img" multiple>       
             - var lst =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
             <select >

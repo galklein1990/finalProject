@@ -7,7 +7,15 @@ const Registration = require('../models/Registration');
 const registrationHelper = require('../models/registrationHelper');
 const email = require("../models/email");
 const metorologyHelper = require('../models/meteorologyHelper');
+
+const runProcess = require('../models/RunProcees');
+var spawn = require("child_process").spawn;
+
+
 var url = require('url');
+
+
+
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
@@ -26,21 +34,25 @@ const password = "password";
 var jsdom = require("jsdom");
 var JSDOM = jsdom.JSDOM;
 
+var fs = require('fs');
+
+
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+
+
+
+var upload = multer({ storage : storage }).array('img',2);
 const options = metorologyHelper.getRequestOptions('1','402','C');
 //metorologyHelper.createMeteorology();
-var registrationValidation = function RegistrationValidation(fields){
- // console.log("we got to registrationValidation");
-  if(fields.firstName != undefined && fields.lastName != undefined ){ 
-  return  fields.firstName.length > 1 &&
-              fields.lastName.length > 1 &&
-              fields.email.length > 1 &&
-              fields.password.length > 3; 
 
-  }
-  return false;
-}
 
-var fs = require('fs');
 
 const basic = auth.basic({
   file: path.join(__dirname, '../users.htpasswd'),
@@ -51,7 +63,27 @@ const basic = auth.basic({
 
 
 router.get('/', (req, res) => {
+  /*var dataString = '';
+  let mode = ' ortho+images ';
+  let ortho = 'C:/Users/mdwq87/Downloads/project/resizedOrtho.tif';
+  let ortho_data = 'C:/Users/mdwq87/Downloads/project/resized.tfw';
+  let pickle_file='';
+  let image_path = 'C:/Users/mdwq87/Downloads/project/input';
+  let output = 'C:/Users/mdwq87/Downloads/project/output';
+  var py =spawn('python', ["C:/Users/mdwq87/Downloads/CTR_proj_main/CTR_proj_main/runMe.py",mode,ortho,
+  ortho_data, pickle_file,image_path,output]);
+  py.stdout.on('data', function(data){
+    dataString += data.toString();
+    console.log("data recevied = ",data.toString()) ;
+  });
+  py.stdout.on('end', function(){
+    
+    console.log('Finish all, dataString = ',dataString);
+  });
 
+  console.log(TAG, "we eill try to run python script.")*/
+  //runProcess.runPythonScript();
+  runProcess.runPythonScript();
   res.render('home');
  
   
@@ -59,15 +91,9 @@ router.get('/', (req, res) => {
  
 
 });
-function reverse(s){
-  return s.split("").reverse().join("");
-}
 
-function createDivContainer(htmlString){
-  var d = document.createElement(htmlString);
-  d.innerHTML = some_html;
-  return d.firstChild;
-}
+
+
 
 router.get('/gal', (req, res) => {
     //res.send('It works galosh!');
@@ -75,12 +101,6 @@ router.get('/gal', (req, res) => {
   res.render('form', { title: 'Registration form 3' });
   });
 
-/*router.post('/', (req, res) => {
-    console.log(req.body);
-    res.send('we post! It works galosh!');
-    //res.render('form', { title: 'Registration form' });
-  });
-*/
 
 
 //const path1 = require('path');
@@ -117,12 +137,7 @@ function writeImage(ImagePath,imgName,res){
   });
 }
 
-app.post('/', upload.array('photos', 12), function (req, res, next) {
-  console.log(TAG,"app.post was invoked")
- 
-  // req.files is array of `photos` files
-  // req.body will contain the text fields, if there were any
-})
+
 router.post('/',
 
 /**/[
@@ -135,8 +150,9 @@ router.post('/',
     .withMessage('Please enter a proper password'),
 ],    ////upload.array('photos', 2),
 (req, res,next) => {
+  //console.log("rqe", req);
   console.log(TAG, "req.body = ", req.body)
-  console.log(TAG,"we are in post request in 'home' page");
+  //console.log(TAG,"we are in post request in 'home' page");
  // console.log("req.headers = ",req.headers);
   console.log("req.headers.host = ",req.headers.host);
   //var pathname = url.parse(req.headers.host).pathname;
@@ -148,9 +164,18 @@ router.post('/',
   console.log("req.files = ")
   //console.log(req.files.length);
   if(req.body.img!= undefined){
+  //   upload(req,res,function(err) {
+  //     //console.log(req.body);
+  //     //console.log(req.files);
+  //     if(err) {
+  //         return res.end("Error uploading file.");
+  //     }
+      
+  //     res.end("File is uploaded");
+  // });
     //writeImage(req.headers.host,req.body.img[0],res)
     console.log("images = ");
-    email.sendEmail();
+    //email.sendEmail();
   }
 
 
@@ -173,6 +198,8 @@ router.post('/',
     }
 
   }
+
+  
 }
 );
 
@@ -194,10 +221,23 @@ if(registrationFailed){
 else{
   res.render('registration', {title: 'join us' });
 }
+})
+
+
+router.post('/myImages', (req, res) => {
+  upload(req,res,function(err) {
+    //console.log(req.body);
+    //console.log(req.files);
+    if(err) {
+        return res.end("Error uploading file.");
+    }
+    res.end("File is uploaded");
+});
   
 });
 
 router.get('/signIn', (req, res) => {
+
   res.render('signIn', { title: 'sign in' });
 });
 

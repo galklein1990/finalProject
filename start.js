@@ -1,9 +1,11 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const TAG = "start->";
+const runProcess = require('./models/RunProcees');
+
 
 listenToProgramCrash();
-
+//runProcess.runPythonScript()
 mongoose.connect(process.env.DATABASE,{ useNewUrlParser: true });
 //mongoose.Promise = global.Promise;
 mongoose.connection
@@ -33,6 +35,6 @@ function listenToProgramCrash() {
 
 
   process.on('SIGTERM', function () {
-
+    console.log("bad exit...");
   })
 }
