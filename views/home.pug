@@ -1,19 +1,43 @@
 extends layout
 
 block content
+    -showImages = showImages || false
+    -images = images
+    -email = email
     -data = data || {}
     -registered = registered || false 
     if registered
+        //div =  #{email}
         div Upload Images
         br
-        <form action="/myImages" method="post" enctype="multipart/form-data">Select images:
-            <input type="file" name="img" multiple>       
-            - var lst =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
-            <select >
-                each city in lst
-                    option(value= city) #{city}           
-            <input type="submit">
-    
+        form(class="formClass" action="/myImages"   method="post" enctype="multipart/form-data")
+            br
+            div
+                label(for="usr" class="") InputDirectory:
+                br
+                <input type="file"  name="inputDirectory" id="usr" multiple>
+                br
+                <input class="hideSubmit" type="submit">
+        form(class="formClass" action="/myImages" method="post" enctype="multipart/form-data") 
+            br
+            div
+                label(for="usr" class="") tifOrthoFileFolder:
+                br
+                <input type="file"  name="tifOrthoFileFolder" id="usr" multiple>
+                br
+                <input class="hideSubmit" type="submit">
+        form(class="formClass" action="/myImages" method="post" enctype="multipart/form-data") 
+            br
+            div
+                label(for="usr" class="") tfwOrthoDataFolder:
+                br
+                <input type="file"  name="tfwOrthoDataFolder" id="usr" multiple>
+                br
+                <input type="submit">
+        if showImages
+            each imgName in images
+                img(src="uploads/inputDirectory/")    
+
             
     else
         a(

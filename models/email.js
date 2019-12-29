@@ -13,8 +13,8 @@ let transport = nodemailer.createTransport({
 const message = {
     from: 'gal.klein.1990@gmail.com', // Sender address
     to: 'gal.klein.1990@gmail.com',         // List of recipients
-    subject: 'email demo ', // Subject line
-    text: 'We can send email' // Plain text body
+    subject: 'pictures are ready!', // Subject line
+    text: 'go to the website', // Plain text body
 };
 
 exports.sendEmail = function(){

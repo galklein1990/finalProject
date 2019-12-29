@@ -1,0 +1,16 @@
+extends layout
+block content
+    -images = images || {}
+    -email = email
+    if images
+        div your images are:
+            each myImg in images
+                a(download="custom-filename.jpg" title="ImageName" src='/outputDirectory/' + myImg)
+                    img(alt="ImageName" class="sizeOfPics" src='/outputDirectory/' + myImg)
+                br
+                br
+                br
+                br
+
+    else
+        div your images will be present shourtly...

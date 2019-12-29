@@ -66,8 +66,6 @@ function register(req,res){
             new String(password).valueOf()== new String(registration.password).valueOf())
         {
             console.log(TAG,"checkRegistration-> we found a match");
-            console.log(TAG, "checkRegistration-> registration.email = " + registration.email);
-            console.log(TAG,"checkRegistration-> registration.password = " + registration.password);
             existUser = true;
             registrationFailed = false;
         } 
@@ -76,7 +74,7 @@ function register(req,res){
         registrationSucceed(req,res);
       }
       else {
-        console.log(TAG,"checkRegistration we did not found a match");
+        console.log(TAG,"checkRegistration-> we did not found a match");
         res.render('signIn', { registerFailed: true, errors: errors.array(),  title: 'join us' });
       }  //new user
         //registerNewUser(req,res);
@@ -92,7 +90,7 @@ function register(req,res){
   function registrationSucceed(req,res){
     res.render('home', {
       email: req.body.email,  
-      title: 'Registration form we succsedd',
+      title: req.body.email,
       registered: true,
       data: req.body,
     });
