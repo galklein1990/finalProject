@@ -16,7 +16,7 @@ body {
     width: 500px;
   }
   .formClass{position: relative; left:35%;}
-  .hideSubmit{ display: contents;}
+  /*.hideSubmit{ display: contents;}*/
   /* css for registration form and errors*/
   .form-registration {
     max-width: 330px;

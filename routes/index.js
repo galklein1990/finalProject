@@ -179,20 +179,7 @@ else{
 })
 
 
-router.post('/myImages', (req, res) => {
-  console.log(TAG,"we are in myImages post req...");
-//var publicDir = require('path').join(__dirname,'../uploads/inputDirectory' );
-//app.static(express.static(publicDir));
-let mode = ' ortho+images ',ortho = 'C:/Users/mdwq87/Downloads/project/resizedOrtho.tif'
-,ortho_data = 'C:/Users/mdwq87/Downloads/project/resized.tfw',pickle_file='',image_path = 'C:/Users/mdwq87/Downloads/project/input',
-output = 'C:/Users/mdwq87/Desktop/gal/project/uploads/outputDirectory';
-//runProcess.runPythonScript(mode,ortho,ortho_data,pickle_file,image_path,output,res);
-runProcess.runPythonScript();
-res.send("we will send an email when the algorthitrm is finished and pics are available!");
-//console.log("req",req);
-//downloadImages.downloadAllImages(req,res);  //("uploads/inputDirectory",req,res,'inputDirectory','img')
-  
-});
+
 
 router.get('/signIn', (req, res) => {
 
@@ -259,3 +246,24 @@ function numberOfImages(imageDir){
 })
 
 }
+
+var downloadIndex = 0;
+router.post('/myImages', (req, res) => {
+  downloadIndex++;
+  console.log(TAG,"we are in myImages post req...",downloadIndex);
+  
+//var publicDir = require('path').join(__dirname,'../uploads/inputDirectory' );
+//app.static(express.static(publicDir));
+/*let mode = ' ortho+images ',ortho = 'C:/Users/mdwq87/Downloads/project/resizedOrtho.tif'
+,ortho_data = 'C:/Users/mdwq87/Downloads/project/resized.tfw',pickle_file='',image_path = 'C:/Users/mdwq87/Downloads/project/input',
+output = 'C:/Users/mdwq87/Desktop/gal/project/uploads/outputDirectory';
+runProcess.runPythonScript(mode,ortho,ortho_data,pickle_file,image_path,output,res);
+*/
+//runProcess.runPythonScript();
+//res.send("we will send an email when the algorthitrm is finished and pics are available!");
+//console.log("req",req);
+//downloadImages.downloadAllImages(req,res);  //("uploads/inputDirectory",req,res,'inputDirectory','img')
+
+
+downloadImages.downloadAllImages(req,res);
+});

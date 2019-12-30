@@ -17,23 +17,19 @@ block content
                 br
                 <input type="file"  name="inputDirectory" id="usr" multiple>
                 br
-                <input class="hideSubmit" type="submit">
-        form(class="formClass" action="/myImages" method="post" enctype="multipart/form-data") 
-            br
             div
                 label(for="usr" class="") tifOrthoFileFolder:
                 br
                 <input type="file"  name="tifOrthoFileFolder" id="usr" multiple>
                 br
-                <input class="hideSubmit" type="submit">
-        form(class="formClass" action="/myImages" method="post" enctype="multipart/form-data") 
-            br
             div
                 label(for="usr" class="") tfwOrthoDataFolder:
                 br
                 <input type="file"  name="tfwOrthoDataFolder" id="usr" multiple>
-                br
-                <input type="submit">
+                br                
+                <input  class="downloadInputDirectory hideSubmit" type="submit">
+      
+        button(type="button" class="triggerAllDownloads") Analyze Data
         if showImages
             each imgName in images
                 img(src="uploads/inputDirectory/")    
@@ -49,4 +45,5 @@ block content
         class='signIn'
         href = '/signIn'
         ) Sign in 
-        br 
+        br
+        div(class="pressMe") gal 
