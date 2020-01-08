@@ -36,7 +36,7 @@ const querystring = require('querystring');
 const imagesInputDir = "C:/Users/mdwq87/Desktop/img";
 const imagesOutputDir = "C:/Users/mdwq87/Desktop/gal/project/uploads";
 var registered = false;
-let registrationFailed = true;
+let registrationFailed = false;
 const TAG = "index->";
 //const email = "email";
 const password = "password";
@@ -88,62 +88,13 @@ router.get('/gal', (req, res) => {
   res.render('form', { title: 'Registration form 3' });
   });
 
-router.post('/',
-
-/**/[
-
-  body('email')
-    .isLength({ min: 1 })
-    .withMessage('Please enter an email'),
-  body('password')
-    .isLength({ min: 4 })
-    .withMessage('Please enter a proper password'),
-],    ////upload.array('photos', 2),
-(req, res,next) => {
-
-  console.log(TAG, "req.body = ", req.body)
-  console.log("req.headers.host = ",req.headers.host);
-  //var pathname = url.parse(req.headers.host).pathname;
-  //console.log("pathname = " , pathname)
-  //console.log(req)
-  let images = req.body.img;
-  console.log(req.body.img);
-
-  console.log("req.files = ")
-  //console.log(req.files.length);
-  if(req.body.img!= undefined){
-  //   upload(req,res,function(err) {
-  //     //console.log(req.body);
-  //     //console.log(req.files);
-  //     if(err) {
-  //         return res.end("Error uploading file.");
-  //     }
-      
-  //     res.end("File is uploaded");
-  // });
-    //writeImage(req.headers.host,req.body.img[0],res)
-    console.log("images = ");
-    //email.sendEmail();
-  }
-
-
- 
-
-
- 
+router.post('/',(req, res,next) => { 
+  let firstName = req.body.firstName;
+  let email = req.body.email;
   let  errors = validationResult(req);
   if (errors.isEmpty()) 
   {  
-    if(req.body.firstName != undefined) 
-    {
-      console.log(TAG,"we are in join now request");
-      registrationHelper.registerNewUser(req,res);
-    } 
-    else 
-    {
-      console.log(TAG,"we are in sign in request");
-      registrationHelper.checkRegistration(req,res,req.body.email,req.body.password);
-    }
+    registrationHelper.deleteUser(firstName,email,res)
 
   }
 
@@ -156,11 +107,21 @@ router.get('/registrations',  auth.connect(basic),(req, res) => {
   //res.render('index', { title: 'Listing registrations' });
   Registration.find()
   .then((registrations) => {
-    res.render('index', { title: 'Listing registrations', registrations });
+    res.render('manageRegistrations', { title: 'Listing registrations', registrations });
   })
   .catch(() => { res.send('Sorry! Something went wrong.'); });
 });
 
+
+
+router.post('/registrations',  auth.connect(basic),(req, res) => {
+console.log(TAG,"we are is post request registrations")
+  Registration.find()
+  .then((registrations) => {
+    res.render('manageRegistrations', { title: 'Listing registrations', registrations });
+  })
+  .catch(() => { res.send('Sorry! Something went wrong.'); });
+});
 
 router.get('/join', (req, res) => {
 if(registrationFailed){
@@ -189,13 +150,7 @@ router.post('/handleRegistration',[
     .withMessage('Please enter a proper password'),
 ] ,(req, res) => {
   req.session.email = req.body.email;
-  console.log("handleRegistration req.session",req.session)
- /* let dir ="./uploads/" + req.session.email ;
-  if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
-  }*/
   createDirectory.createUserDirectory(req.session.email);
- // email.sendEmail();
   let  errors = validationResult(req);
   if (errors.isEmpty()) 
   {  
@@ -247,25 +202,7 @@ function numberOfImages(imageDir){
 
 }
 
-var downloadIndex = 0;
- console.log(TAG,"we are in myImages post req...",downloadIndex);
-router.post('/myImages', (req, res) => {
-  console.log("myimages req.seesion", req.session)
-  downloadIndex++;
-  
-  
-//var publicDir = require('path').join(__dirname,'../uploads/inputDirectory' );
-//app.static(express.static(publicDir));
-/*let mode = ' ortho+images ',ortho = 'C:/Users/mdwq87/Downloads/project/resizedOrtho.tif'
-,ortho_data = 'C:/Users/mdwq87/Downloads/project/resized.tfw',pickle_file='',image_path = 'C:/Users/mdwq87/Downloads/project/input',
-output = 'C:/Users/mdwq87/Desktop/gal/project/uploads/outputDirectory';
-runProcess.runPythonScript(mode,ortho,ortho_data,pickle_file,image_path,output,res);
-*/
-//runProcess.runPythonScript();
-//res.send("we will send an email when the algorthitrm is finished and pics are available!");
-//console.log("req",req);
-//downloadImages.downloadAllImages(req,res);  //("uploads/inputDirectory",req,res,'inputDirectory','img')
 
-//runProcess.runPythonScript()
+router.post('/myImages', (req, res) => {
 downloadImages.downloadAllImages(req,res);
 });

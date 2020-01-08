@@ -1,0 +1,40 @@
+extends layout
+
+block content
+
+  if registrations.length
+    table.listing-table.table-dark.table-striped
+      tr
+        th Name
+        th Email
+        th Delete User
+      each registration in registrations
+        tr
+          td(class ="userFirstName")= registration.firstName
+          td(class ="userEmail")= registration.email
+          td
+            button(type="button" class ="deleteUser") delete
+  
+    form(class="hideMe" action="./" method="POST" )
+        br
+        input(
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="form-control" 
+        )
+        br
+        input(
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            value=myEmail
+        )
+        input(
+            type="submit"
+            value="click"
+            class="performDelete"
+        )
+  else
+    p No registrations yet :(

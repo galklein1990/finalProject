@@ -10,9 +10,34 @@ html
     script( src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous")
     script( src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous")
     script( src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js")
     script(type="text/javascript" src='/js/handleRegistration.js')
     title= `${title}`
     -var failed = registerFailed || 'please Register' 
-    div.container.listing-reg
-      h1 Final   
+    div(class="bd-example")
+      nav(class="navbar navbar-expand-lg navbar-light bg-light")
+        a(class="navbar-brand" href="#") 
+        div(class="collapse navbar-collapse" id="navbarSupportedContent")
+          ul(class="navbar-nav mr-auto")
+            li(class="nav-item")
+              a(class="nav-link" href="#") Home            
+            li(class="nav-item active")
+              a(class="nav-link" href="#") Login
+            li(class="nav-item")
+              a(class="nav-link" href="#") Sign In
+
+    block content
+
+    //div.container.listing-reg
+      div(class="bd-example")
+        nav(class="navbar navbar-expand-lg navbar-light bg-light")
+          a(class="navbar-brand" href="#") 
+          div(class="collapse navbar-collapse" id="navbarSupportedContent")
+            ul(class="navbar-nav mr-auto")
+              li(class="nav-item")
+                a(class="nav-link" href="#") Home            
+              li(class="nav-item active")
+                a(class="nav-link" href="#") Login
+              li(class="nav-item")
+                a(class="nav-link" href="#") Sign In
       block content

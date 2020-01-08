@@ -52,27 +52,39 @@ function register(req,res){
 
 
 
-  exports.deleteUser = function(firstName, lastName){
-    let errors = validationResult(req);
+  exports.deleteUser = function(firstName, email, res){
+    console.log(TAG,"in deleteUser...")
+    Registration.deleteOne({firstName: firstName, email: email},(err)=>{
+      if(err){
+        console.log("failed deleting the user ",email );
+        res.send('Sorry! Something went wrong.');
+      }
+      else{
+        console.log("succsesfuly deleted user ",email );
+        Registration.find()
+        .then((registrations) => {
+          res.render('manageRegistrations', { title: 'Listing registrations', registrations });
+        })
+        .catch(() => { res.send('Sorry! Something went wrong.'); });
+       
+      }
+    })
+    /*
     Registration.find().then((registrations) => {
       let existEmail = false;
       registrations.forEach(function(registration)
       {
-        registration.na
-        if( new String(req.body.email).valueOf()== new String(registration.email).valueOf()){
-            existEmail = true; 
+        
+        if( new String(firstName).valueOf()== new String(registration.firstName).valueOf() &&
+        new String(lastName).valueOf()== new String(registration.lastName).valueOf() ){
+            //deleteuser
+            registration.dele
           } 
       })
-      if(!existEmail){
-        console.log(TAG,"registerNewUser-> email not exist in db ")
-        register(req,res);
-      }
-      else{
-        console.log(TAG,"registerNewUser-> email exist in db ")
-        res.render('registration', {  errors: errors.array(),email: 'Email is already in use', title: 'join us' });
-      }
+      */
+      
   
-  })
+
   
   }
   
