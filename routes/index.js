@@ -7,6 +7,9 @@ const Registration = require('../models/Registration');
 const registrationHelper = require('../models/registrationHelper');
 const email = require("../models/email");
 const metorologyHelper = require('../models/meteorologyHelper');
+const createDirectory =require('../models/createDirectory');
+
+
 
 const runProcess = require('../models/RunProcees');
 const downloadImages = require('../models/downloadImages');
@@ -42,22 +45,11 @@ var JSDOM = jsdom.JSDOM;
 
 var fs = require('fs');
 
-/*
-var storage = multer.diskStorage({
-  
-  destination: function (req, file, callback) {
-    console.log(TAG,"destination diskStorage...")
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-    console.log(TAG,"destination filename...")
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
 
 
 
-var upload = multer({ storage : storage }).array('img',2);*/
+
+
 const options = metorologyHelper.getRequestOptions('1','402','C');
 //metorologyHelper.createMeteorology();
 
@@ -78,11 +70,12 @@ router.get('/', (req, res) => {
 
 
 router.get('/results', (req, res) => {
-  fs.readdir("uploads/outputDirectory", function (err, list) {
+  var dir = "uploads/" + req.session.email +"/outputDirectory"; 
+  fs.readdir(dir, function (err, list) {
     if(err){
       console.log("/results err = ", err)
     }
-    res.render('uploaded',{ images: list });
+    res.render('uploaded',{ images: list , dir: ("/" +req.session.email + "/outputDirectory" ) });
   });
 });
 
@@ -195,6 +188,13 @@ router.post('/handleRegistration',[
     .isLength({ min: 4 })
     .withMessage('Please enter a proper password'),
 ] ,(req, res) => {
+  req.session.email = req.body.email;
+  console.log("handleRegistration req.session",req.session)
+ /* let dir ="./uploads/" + req.session.email ;
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }*/
+  createDirectory.createUserDirectory(req.session.email);
  // email.sendEmail();
   let  errors = validationResult(req);
   if (errors.isEmpty()) 
@@ -248,9 +248,11 @@ function numberOfImages(imageDir){
 }
 
 var downloadIndex = 0;
+ console.log(TAG,"we are in myImages post req...",downloadIndex);
 router.post('/myImages', (req, res) => {
+  console.log("myimages req.seesion", req.session)
   downloadIndex++;
-  console.log(TAG,"we are in myImages post req...",downloadIndex);
+  
   
 //var publicDir = require('path').join(__dirname,'../uploads/inputDirectory' );
 //app.static(express.static(publicDir));
@@ -264,6 +266,6 @@ runProcess.runPythonScript(mode,ortho,ortho_data,pickle_file,image_path,output,r
 //console.log("req",req);
 //downloadImages.downloadAllImages(req,res);  //("uploads/inputDirectory",req,res,'inputDirectory','img')
 
-
+//runProcess.runPythonScript()
 downloadImages.downloadAllImages(req,res);
 });

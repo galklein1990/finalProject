@@ -2,11 +2,12 @@ extends layout
 block content
     -images = images || {}
     -email = email
+    -directory = dir
     if images
-        div your images are:
+        div(class="gallery" id="gallery" style="opacity: 1;") your images are:
             each myImg in images
-                a(download="custom-filename.jpg" title="ImageName" src='/outputDirectory/' + myImg)
-                    img(alt="ImageName" class="sizeOfPics" src='/outputDirectory/' + myImg)
+                div(class="mb-3 pics animation all 1")
+                    img(alt="Card image cap" class="img-fluid sizeOfPics " src=  directory + "/" + myImg)
                 br
                 br
                 br
@@ -14,3 +15,7 @@ block content
 
     else
         div your images will be present shourtly...
+
+
+
+        //a(download="custom-filename.jpg" title="ImageName" src= directory + "/" +myImg)

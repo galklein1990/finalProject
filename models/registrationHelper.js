@@ -49,6 +49,32 @@ function register(req,res){
   
   }
   
+
+
+
+  exports.deleteUser = function(firstName, lastName){
+    let errors = validationResult(req);
+    Registration.find().then((registrations) => {
+      let existEmail = false;
+      registrations.forEach(function(registration)
+      {
+        registration.na
+        if( new String(req.body.email).valueOf()== new String(registration.email).valueOf()){
+            existEmail = true; 
+          } 
+      })
+      if(!existEmail){
+        console.log(TAG,"registerNewUser-> email not exist in db ")
+        register(req,res);
+      }
+      else{
+        console.log(TAG,"registerNewUser-> email exist in db ")
+        res.render('registration', {  errors: errors.array(),email: 'Email is already in use', title: 'join us' });
+      }
+  
+  })
+  
+  }
   
   
   
@@ -62,6 +88,9 @@ function register(req,res){
       
       registrations.forEach(function(registration)
       {
+        if(req.session.user == {}){
+          req.session.user =registration.user;
+        }
         if( new String(email).valueOf()== new String(registration.email).valueOf() && 
             new String(password).valueOf()== new String(registration.password).valueOf())
         {

@@ -1,86 +1,127 @@
-html, body {
-    height: 100%;
-  }
+html,
 body {
-    padding: 40px 10px;
-    background-color: #0077b5;
-  }
-  .listing-reg h1 {
-    text-align: center;
-    margin: 0 0 2rem;
-  }
-  .sizeOfPics{
-    position: relative;
-    left: 25%;
-    height: 500px;
-    width: 500px;
-  }
-  .formClass{position: relative; left:35%;}
-  /*.hideSubmit{ display: contents;}*/
-  /* css for registration form and errors*/
-  .form-registration {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-  }
-  .form-registration {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .form-registration input {
-    width: 100%;
-    margin: 0px 0 10px;
-  }
-  .form-registration .btn {
-    flex: 1 0 100%;
-  }
-  .my-errors {
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    color: #333;
-    font-size: 1.2rem;
-    display: table;
-  }
-  .my-errors li {
-    margin: 0 0 1rem;
-  }
-  .my-errors li:before {
-    content: "! Error : ";
-    color: #f00;
-    font-weight: bold;
-  }
-  
-  /* Styles for listing table */
-  .listing-table {
-    width: 100%;
-  }
-  .listing-table th,
-  .listing-table td {
-    padding: 10px;
-    border-bottom: 1px solid #666;
-  }
-  .listing-table th {
-    background: #000;
-    color: #fff;
-  }
-  .listing-table td:first-child,
-  .listing-table th:first-child {
-    border-right: 1px solid #666;
-  }
- 
-  .form-control, .inputDescription{position: relative; left:20%; }
-  .agree{background-color: cornflowerblue}
-  .formWrapper{width: 20%;
-    background-color: antiquewhite;
-    padding: 2%;
-    position: relative; left:38%; 
+  height: 100%;
 }
-.logginFail{
+body {
+  padding: 40px 10px;
+  background-color: #0077b5;
+}
+.listing-reg h1 {
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.formClass {
   position: relative;
-  left:32%;
-  padding-bottom:3%;
+  left: 35%;
+}
+/*.hideSubmit{ display: contents;}*/
+/* css for registration form and errors*/
+.form-registration {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-registration {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-registration input {
+  width: 100%;
+  margin: 0px 0 10px;
+}
+.form-registration .btn {
+  flex: 1 0 100%;
+}
+.my-errors {
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  color: #333;
+  font-size: 1.2rem;
+  display: table;
+}
+.my-errors li {
+  margin: 0 0 1rem;
+}
+.my-errors li:before {
+  content: "! Error : ";
+  color: #f00;
+  font-weight: bold;
 }
 
+/* Styles for listing table */
+.listing-table {
+  width: 100%;
+}
+.listing-table th,
+.listing-table td {
+  padding: 10px;
+  border-bottom: 1px solid #666;
+}
+.listing-table th {
+  background: #000;
+  color: #fff;
+}
+.listing-table td:first-child,
+.listing-table th:first-child {
+  border-right: 1px solid #666;
+}
 
-  
+.form-control,
+.inputDescription {
+  position: relative;
+  left: 20%;
+}
+.agree {
+  background-color: cornflowerblue;
+}
+.formWrapper {
+  width: 20%;
+  background-color: antiquewhite;
+  padding: 2%;
+  position: relative;
+  left: 38%;
+}
+.logginFail {
+  position: relative;
+  left: 32%;
+  padding-bottom: 3%;
+}
+
+.gallery {
+  webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  -webkit-column-width: 33%;
+  -moz-column-width: 33%;
+  column-width: 33%;
+}
+
+.gallery .animation {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.gallery .pics {
+  -webkit-transition: all 350ms ease;
+  transition: all 350ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.img-fluid,
+.modal-dialog.cascading-modal.modal-avatar .modal-header,
+.video-fluid {
+  max-width: 100%;
+  height: auto;
+}
+img {
+  vertical-align: middle;
+  border-style: none;
+}
