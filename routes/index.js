@@ -47,12 +47,10 @@ var fs = require('fs');
 
 
 
-
-
-
 const options = metorologyHelper.getRequestOptions('1','402','C');
-//metorologyHelper.createMeteorology();
 
+
+//metorologyHelper.createMetorlogyRequest("Eilat","./uploads/" + "aaa@com" + "/forecast/forecast.json")
 
 
 const basic = auth.basic({
@@ -204,5 +202,20 @@ function numberOfImages(imageDir){
 
 
 router.post('/myImages', (req, res) => {
+  console.log("req.body ", req.body)
+metorologyHelper.createMetorlogyRequest("Eilat","./uploads/" + req.session.email + "/forecast/forecast.json")
 downloadImages.downloadAllImages(req,res);
 });
+
+
+router.get('/meteorologyforcast', (req, res) => {
+  const userForecast = require("../uploads/" + req.session.email + "/forecast/forecast.json")
+   res.render('meteorologyforcast', { 
+    forcast: userForecast["forcast"],humidity: userForecast["humidity"], maxTempDay: userForecast["maxTempDay"],
+    minTempNight : userForecast["minTempNight"],   windDirection: userForecast["windDirection"],   frequentWindSpeed: userForecast["frequentWindSpeed"],
+    maxWindSpeed:userForecast["maxWindSpeed"] , city: userForecast["city"]
+  
+    });
+
+});
+// אדשרקהם

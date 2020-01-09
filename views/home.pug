@@ -26,24 +26,30 @@ block content
                 label(for="usr" class="") tfwOrthoDataFolder:
                 br
                 <input type="file"  name="tfwOrthoDataFolder" id="usr" multiple>
+                br
+                <input type="text" class="hideMe" name="chosenCity" id="chosenCity">
                 br                
+                <select class="selectedCity" >
+                    - var cities =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
+                    each city in cities
+                        option(value= city) #{city}
+                br
+                br
+                <button class="analyze" type="button"> submit </button>
                 <input  class="downloadInputDirectory hideSubmit" type="submit">
       
-        button(type="button" class="triggerAllDownloads") Analyze Data
+       
         if showImages
             each imgName in images
                 img(src="uploads/inputDirectory/")    
 
             
     else
-        a(
-            class='JoinNow'
-            href = '/join'
-        )   Join now 
-        br
-        a(
-        class='signIn'
-        href = '/signIn'
-        ) Sign in 
-        br
-        div(class="pressMe") gal 
+        div(class="container-fluid")
+            div(id="introduction" class="col-lg-12")
+                h1 The Problem
+                p Farming field monitoring is a complex problem. A Grown field looks like a continuous carpet in a typical 300-acre area and even more. When a field is ill or attacked by the pest, The phenomenon begins in a narrow field. This area may be far from the edge of the field and unobservable from the ground.
+            div(id="introduction" class="col-lg-12")
+                h1 Our Solution
+                p We Provide the farmer with a Solution for diagnostic an ill field. We analyze the images the farmer uploads to us, which is taken Mostly by drone which hover over the field and takes pictures, and then returns a analytics on those pictures.  
+            

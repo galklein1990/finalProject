@@ -6,7 +6,8 @@ exports.createUserDirectory = function(email){
     "./uploads/" + email + "/inputDirectory",
     "./uploads/" + email + "/tifOrthoFileFolder",
     "./uploads/" + email + "/tfwOrthoDataFolder",
-     "./uploads/" + email + "/outputDirectory"
+     "./uploads/" + email + "/outputDirectory",
+     "./uploads/" + email + "/forecast"
     ]
     for(let i = 0; i < directories.length; i++ ){
         createDirectory(directories[i]);

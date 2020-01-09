@@ -1,5 +1,6 @@
 const Meteorology = require('./Meteorology');
 const { body, validationResult } = require('express-validator');
+const fs = require('fs');
 var jsdom = require("jsdom");
 var JSDOM = jsdom.JSDOM;
 
@@ -11,7 +12,7 @@ const querystring = require('querystring');
 const cityToLocationId = {
   "Eilat":520,
   "Mitzpe Ramon":106,
-  "Beersheba":105,
+  "Beersheba":513,
   "Ein Gedi":105,
   "Jerusalem":510,
   "Lod": 204,
@@ -25,6 +26,10 @@ const cityToLocationId = {
   "Tveria":202,
   "Nazareth":207,
 }
+
+const langId = 2;
+
+
 
 
 /* 
@@ -126,22 +131,30 @@ function getHeaders(contentLength){
 langId: number for http req
 
 */   
-exports.createMetorlogyRequest = function(langId,locationId){
+//before langId,locationId were parameters
+exports.createMetorlogyRequest = function(city, path = null){
+console.log(TAG,"path to json folder = ",path);
+    /*request.post({url:'http://www.ims.gov.il/IMS/Pages/IsrCitiesTodayForeCast.aspx', form: {key:'value'}}, function(err,httpResponse,body){
+    console.log("httpResponse->" ,httpResponse)  
+    //console.log("body->",body)
+     })*/
+
+
+    let locationId = cityToLocationId[city];
+    console.log("location id is ...", locationId)
     let options = exports.getRequestOptions(langId,locationId,'C');
     request(options, function(err, res, body) {
         let html = "";
         
-        for(let i = 0; i < body.length; i++){
+       /* for(let i = 0; i < body.length; i++){
           html += body[i];
         }
-       /* html = ''+'<body>'+
-          '<p>Hello World</p>'+
-        '</body>';
-        */
+        console.log("html " ,html)*/
+       
         global.document = new JSDOM(body).window.document;
-       // console.log(" global.document = ",  global.document);
-       // console.log(" global.document.body  ",  global.document.body.innerHTML);
-       let forcast = reverse( global.document.getElementById("tdForcast").innerHTML  ) 
+        //console.log(" global.document = ",  global.document);
+        //console.log(" global.document.body  ",  global.document.body.innerHTML);
+      let forcast =  global.document.getElementById("tdForcast").innerHTML ; 
        console.log(TAG,"document.getElementById(tdForcast).innerHTML", forcast)
        let maxTempDay = global.document.getElementById("MaxTempDuringDayVal").innerHTML;
       
@@ -155,16 +168,30 @@ exports.createMetorlogyRequest = function(langId,locationId){
        
        let maxWindSpeed = global.document.getElementById("MaxWindSpeedVal").innerHTML;
       
-       createMeteorologyRecord(langId,locationId,"ashdod",forcast,
+       var meteorology = {
+         forcast:forcast,
+         maxTempDay:maxTempDay,
+         maxTempDay:maxTempDay,
+         minTempNight:minTempNight,
+         humidity:humidity,
+         windDirection:windDirection,
+         frequentWindSpeed:frequentWindSpeed,
+         maxWindSpeed:maxWindSpeed,
+         city:city
+       }
+
+      let meteorologyData = JSON.stringify(meteorology);
+      if(path != null ){
+        fs.writeFileSync(path, meteorologyData);
+      }
+      
+       console.log(TAG,"metrollogy = ",meteorology)
+
+       /*createMeteorologyRecord(langId,locationId,"ashdod",forcast,
        maxTempDay,minTempNight,humidity,windDirection,frequentWindSpeed,maxWindSpeed);
-        //console.log(TAG," document.getElementById(MaxTempDuringDayVal).innerHTML = ",  maxTempDay);
-       //console.log(TAG," document.getElementById(MinTempNightVal).innerHTML = ", minTempNight );
-       //console.log(TAG," document.getElementById(RelHumidityNoonVal).innerHTML = ",  humidity);
-       //console.log(TAG," document.getElementById(WindDirectionVal).innerHTML = ", windDirection );
-       //console.log(TAG," document.getElementById(FreqWindSpeedVal).innerHTML = ", frequentWindSpeed);
-       //console.log(TAG," document.getElementById(MaxWindSpeedVal).innerHTML = ",maxWindSpeed);
-       //console.log(" document.getElementById(WindDirectionVal).innerHTML = ",  global.document.getElementById("WindDirectionVal").innerHTML);
+     */
        
+     
        /*  console.log(" global.document.Document = ",  global.document.Document);
         console.log(" global.document.location.href = ",  global.document.location.href);
       */

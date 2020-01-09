@@ -4,9 +4,10 @@
 
   $(document).ready(function() {
   
-    $(".triggerAllDownloads").click(function(){
-        $(".downloadInputDirectory").click();
-        
+    $(".analyze").click(function(){
+        //analyze
+        $("#chosenCity").val( $(".selectedCity").val() );
+        $(".downloadInputDirectory").click()
         });
 
    $(".deleteUser").click(function(){
