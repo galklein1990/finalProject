@@ -132,7 +132,7 @@ langId: number for http req
 
 */   
 //before langId,locationId were parameters
-exports.createMetorlogyRequest = function(city, path = null){
+exports.createMetorlogyRequest = function(city, path = null,req,res){
 console.log(TAG,"path to json folder = ",path);
     /*request.post({url:'http://www.ims.gov.il/IMS/Pages/IsrCitiesTodayForeCast.aspx', form: {key:'value'}}, function(err,httpResponse,body){
     console.log("httpResponse->" ,httpResponse)  
@@ -143,7 +143,7 @@ console.log(TAG,"path to json folder = ",path);
     let locationId = cityToLocationId[city];
     console.log("location id is ...", locationId)
     let options = exports.getRequestOptions(langId,locationId,'C');
-    request(options, function(err, res, body) {
+    request(options, function(err, res2, body) {
         let html = "";
         
        /* for(let i = 0; i < body.length; i++){
@@ -182,10 +182,26 @@ console.log(TAG,"path to json folder = ",path);
 
       let meteorologyData = JSON.stringify(meteorology);
       if(path != null ){
+        /*fs.writeFile(path,meteorologyData, function(err){
+           if(err){
+             console.log("in meteorologyData err-> ",err)
+           }
+           else{
+             console.log("in meteorologyData finished successfully!")
+             console.log(TAG,"metrollogy = ",meteorology)
+             console.log("we are going to return")
+             //process.exit()
+             return;
+       
+           }
+        })*/
+
+
+        
         fs.writeFileSync(path, meteorologyData);
       }
       
-       console.log(TAG,"metrollogy = ",meteorology)
+     //  console.log(TAG,"metrollogy = ",meteorology)
 
        /*createMeteorologyRecord(langId,locationId,"ashdod",forcast,
        maxTempDay,minTempNight,humidity,windDirection,frequentWindSpeed,maxWindSpeed);

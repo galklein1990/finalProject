@@ -200,12 +200,25 @@ function numberOfImages(imageDir){
 
 }
 
-
-router.post('/myImages', (req, res) => {
-  console.log("req.body ", req.body)
-metorologyHelper.createMetorlogyRequest("Eilat","./uploads/" + req.session.email + "/forecast/forecast.json")
-downloadImages.downloadAllImages(req,res);
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+router.post('/myImages',multipartMiddleware, (req, res) => {
+  console.log("req.body ->",req.body);
+  //console.log("req.files ->", req.files)
+  
+  console.log("req.session.email", req.session.email )
+ 
+ // console.log("req.client.Socket", req.client.Socket )
+  metorologyHelper.createMetorlogyRequest(req.body.chosenCity,"./uploads/" + req.session.email + "/forecast/forecast.json",req,res)
+  downloadImages.downloadAllImages(req,res);
+  res.render('home', {
+      email: req.body.email,
+      title: 'Registration form we succsedd',
+      registered: true,    
+          });
 });
+
+
 
 
 router.get('/meteorologyforcast', (req, res) => {

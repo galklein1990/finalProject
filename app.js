@@ -11,7 +11,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({secret: 'ssshhhhh',resave:true}));
+app.use(bodyParser.json());
+app.use(session({secret: 'ssshhhhh',resave:true,saveUninitialized:true}));
 
 app.use('/', routes);
 app.use(express.static('public'));

@@ -6,8 +6,12 @@
   
     $(".analyze").click(function(){
         //analyze
-        $("#chosenCity").val( $(".selectedCity").val() );
-        $(".downloadInputDirectory").click()
+        $(".alert").removeClass("hideMe");
+        setTimeout(function(){
+          $("#chosenCity").val( $(".selectedCity").val() );
+          $(".downloadInputDirectory").click()
+        },2000)
+        
         });
 
    $(".deleteUser").click(function(){

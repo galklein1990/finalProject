@@ -7,42 +7,47 @@ block content
     -data = data || {}
     -registered = registered || false 
     if registered
-        //div =  #{email}
-        div Upload Images
-        br
-        form(class="formClass" action="/myImages"   method="post" enctype="multipart/form-data")
-            br
-            div
-                label(for="usr" class="") InputDirectory:
-                br
-                <input type="file"  name="inputDirectory" id="usr" multiple>
-                br
-            div
-                label(for="usr" class="") tifOrthoFileFolder:
-                br
-                <input type="file"  name="tifOrthoFileFolder" id="usr" multiple>
-                br
-            div
-                label(for="usr" class="") tfwOrthoDataFolder:
-                br
-                <input type="file"  name="tfwOrthoDataFolder" id="usr" multiple>
-                br
-                <input type="text" class="hideMe" name="chosenCity" id="chosenCity">
-                br                
-                <select class="selectedCity" >
-                    - var cities =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
-                    each city in cities
-                        option(value= city) #{city}
-                br
-                br
-                <button class="analyze" type="button"> submit </button>
-                <input  class="downloadInputDirectory hideSubmit" type="submit">
-      
-       
-        if showImages
-            each imgName in images
-                img(src="uploads/inputDirectory/")    
-
+        div(class="container-fluid")
+            div(id="introduction" class="col-lg-12")
+                h1 First Time?
+                p In order to Use Our service  please do the Following instructions:
+                p 1) Mandatory: Upload the images that were taken by the drone with suffix .png/.jpg to InputDirectory
+                p 2) optional:Upload The orto file which ends with tif suffix  to tifOrthoFileFolder - maximum of 1 photo
+                p 3) optional:Upload The orto file which ends with tif  to tfwOrthoDataFolder: - maximum  1 photo
+                p 4) In order to get heat-Map  as well in the results- please complete optional steps 2 and 3
+                p 5) please choose the nearest location to where the pictures where taken,appears under National weather service
+                p 6) After completing the steps, please press Submit button.
+                form(class="formClass" action="/myImages"   method="post" enctype="multipart/form-data")
+                    - var inputFolders= ["inputDirectory","tifOrthoFileFolder", "tfwOrthoDataFolder"]
+                        each inputFolder in inputFolders
+                            div(class="uploadsDivDirectory")
+                                label(for="usr" class="") #{inputFolder} :
+                                br
+                                <input  type="file"  name=#{inputFolder} id="usr" multiple>
+                        div(class="uploadsDivDirectory")
+                            label(for="usr" class="") National Weather Service
+                            br
+                            <select class="selectedCity" >
+                                - var cities =["Eilat","Mitzpe Ramon","Beersheba","Ein Gedi","Jerusalem","Lod","Ashdod","Tel Aviv","Haifa","Tzfat","Katzrin","Beit Shean","Afula","Tveria","Nazareth"];
+                                each city in cities
+                                    option(value= city) #{city}
+                        <input type="text" class="hideMe" name="chosenCity" id="chosenCity">
+                        br 
+                        div(class="uploadsDivDirectory")
+                            label(for="usr" class="") 
+                            br
+                            <button class="analyze" type="button"> submit </button>                    
+                        br
+                        <input  class="downloadInputDirectory hideMe" type="submit">
+            div(class="alert alert-primary hideMe" role="alert") We will send you an email when we finish the analysis on the pictures!
+            div(id="introduction" class="col-lg-12 meteorologyDiv")
+                h1 Already Uploaded?
+                p In Order to go check the results please Press here :
+                    <button  onclick="window.location.href = 'results';" class="results" type="button"> results </button>
+                p In Order to go check the National Weather Service press here :
+                     <button  onclick="window.location.href = 'meteorologyforcast';" class="meteorologyforcast" type="button"> forecast </button>
+                
+        
             
     else
         div(class="container-fluid")

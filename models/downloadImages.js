@@ -58,7 +58,7 @@ exports.downloadAllImages = function(req,res){
  
       console.log(TAG,"finish download....")
       console.log(TAG,"req.session = ", req.session)
-      runProcess.runPythonScript(req.session.email, req.session.tifFile, req.session.tfwFile);      
+      runProcess.runPythonScript(req.session.email, req.session.tifFile, req.session.tfwFile , res);      
     });
 
    
